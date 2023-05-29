@@ -1,4 +1,17 @@
 from keras.datasets import mnist
+import os
+import pickle
+
+def load_model(model_class, folder):
+    
+    with open(os.path.join(folder, 'params.pkl'), 'rb') as f:
+        params = pickle.load(f)
+
+    model = model_class(*params)
+
+    model.load_weights(os.path.join(folder, 'weights/weights.h5'))
+
+    return model
 
 def load_mnist():
     (x_train, y_train), (x_test, y_test) = mnist.load_data()
